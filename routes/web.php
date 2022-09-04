@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 
@@ -15,21 +16,31 @@ use App\Http\Controllers\User\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
-Route::prefix("user")->name("user.")->group(function() {
+Route::prefix("user")->name("user.")->group(function () {
+  Route::middleware(["guest:web", "prevent-back-history"])->group(function () {
+    Route::get("/login", [UserController::class, "login"])->name("login");
+    Route::get("/register", [UserController::class, "register"])->name("register");
+    Route::post("/register", [UserController::class, "postRegister"]);
+    Route::post("/login", [UserController::class, "postLogin"]);
+  });
 
-    Route::middleware(["guest:web", "prevent-back-history"])->group(function() {
-        Route::view("/login", "user.login")->name("login");
-        Route::view("/register", "user.register")->name("register");
-        Route::post("/register", [UserController::class, "postRegister"]);
-        Route::post("/login", [UserController::class, "postLogin"]);
-    });
+  Route::middleware(["auth:web", "prevent-back-history"])->group(function () {
+    Route::get("/home", [UserController::class, "home"])->name("home");
+    Route::post("/logout", [UserController::class, "logout"])->name("logout");
+  });
+});
 
-    Route::middleware(["auth:web", "prevent-back-history"])->group(function() {
-        Route::view("/home", "user.home")->name("home");
-        Route::post("/logout", [UserController::class, "logout"])->name("logout");
-    });
+Route::prefix("admin")->name("admin.")->group(function () {
+  Route::middleware(["guest:admin", "prevent-back-history"])->group(function () {
+    Route::get("/login", [AdminController::class, "login"])->name("login");
+    Route::post("/login", [AdminController::class, "postLogin"]);
+  });
 
+  Route::middleware(["auth:admin", "prevent-back-history"])->group(function () {
+    Route::get("/home", [AdminController::class, "home"])->name("home");
+    Route::post("/logout", [AdminController::class, "logout"])->name("logout");
+  });
 });

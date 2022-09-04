@@ -138,7 +138,6 @@
   <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script>
-
   <script>
     $("#danger-alert").fadeTo(2000, 500).slideUp(500, function() {
       $("#danger-alert").slideUp(500);

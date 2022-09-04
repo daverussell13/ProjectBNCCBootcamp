@@ -8,6 +8,21 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+  public function home()
+  {
+    return view("admin.home", [
+      "user" => Auth::guard("admin")->user(),
+      "section_title" => "Table"
+    ]);
+  }
+
+  public function login()
+  {
+    return view("admin.login", [
+      "loginRoute" => "/admin/login"
+    ]);
+  }
+
   public function postLogin(Request $request)
   {
     $request->validate([
@@ -23,5 +38,11 @@ class AdminController extends Controller
     }
 
     return redirect()->back()->with("Fail", "Invalid Credentials");
+  }
+
+  public function logout()
+  {
+    Auth::guard("admin")->logout();
+    return redirect()->route("admin.login");
   }
 }

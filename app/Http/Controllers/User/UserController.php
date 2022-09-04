@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+  public function login()
+  {
+    return view("user.login", [
+      "loginRoute" => "/user/login"
+    ]);
+  }
+
+  public function register()
+  {
+    return view("user.register");
+  }
+
+  public function home()
+  {
+    return view("user.home");
+  }
+
   public function postRegister(Request $request)
   {
     $request->validate([
@@ -18,6 +35,8 @@ class UserController extends Controller
       "phone" => "required|starts_with:08|numeric",
       "password" => "required|min:6|max:12",
       "cpassword" => "required|same:password",
+    ], [
+      "cpassword.same" => "Confirmation password didn't match"
     ]);
 
     $user = User::create([
@@ -48,11 +67,9 @@ class UserController extends Controller
     return redirect()->back()->with("Fail", "Invalid Credentials");
   }
 
-  public function logout(Request $request)
+  public function logout()
   {
     Auth::guard("web")->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
     return redirect()->route("user.login");
   }
 }
