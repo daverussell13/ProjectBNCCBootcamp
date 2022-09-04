@@ -34,7 +34,7 @@ class UserController extends Controller
   public function postLogin(Request $request)
   {
     $request->validate([
-      "email" => "required|email|exists:users,email",
+      "email" => "required|email",
       "password" => "required"
     ]);
 
