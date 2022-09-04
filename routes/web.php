@@ -20,14 +20,16 @@ Route::get('/', function () {
 
 Route::prefix("user")->name("user.")->group(function() {
 
-    Route::middleware("guest")->group(function() {
+    Route::middleware(["guest:web", "prevent-back-history"])->group(function() {
         Route::view("/login", "user.login")->name("login");
         Route::view("/register", "user.register")->name("register");
         Route::post("/register", [UserController::class, "postRegister"]);
+        Route::post("/login", [UserController::class, "postLogin"]);
     });
 
-    Route::middleware("auth")->group(function() {
+    Route::middleware(["auth:web", "prevent-back-history"])->group(function() {
         Route::view("/home", "user.home")->name("home");
+        Route::post("/logout", [UserController::class, "logout"])->name("logout");
     });
 
 });

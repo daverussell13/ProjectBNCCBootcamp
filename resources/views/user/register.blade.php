@@ -21,11 +21,11 @@
   </style>
 </head>
 @if (Session::get('Success'))
-  <div class="alert alert-danger">
-    {{ Session::get('Failed') }}
+  <div id="success-alert" class="alert alert-success">
+    {{ Session::get('Success') }}
   </div>
 @elseif (Session::get('Failed'))
-  <div class="alert alert-danger">
+  <div id="danger-alert" class="alert alert-danger">
     {{ Session::get('Failed') }}
   </div>
 @endif
@@ -138,6 +138,16 @@
   <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script>
+
+  <script>
+    $("#danger-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#danger-alert").slideUp(500);
+    });
+
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#success-alert").slideUp(500);
+    });
+  </script>
 </body>
 
 </html>

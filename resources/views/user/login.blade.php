@@ -17,6 +17,11 @@
 </head>
 
 <body class="hold-transition login-page">
+  @if (Session::get('Fail'))
+    <div id="danger-alert" class="alert alert-danger">
+      Error : {{ Session::get('Fail') }}
+    </div>
+  @endif
   <div class="login-box">
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
@@ -27,22 +32,38 @@
         <p class="login-box-msg">Sign in to start your session</p>
 
         <form action="{{ route('user.login') }}" method="post">
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email">
+
+          @csrf
+
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password">
+          <div class="text-danger mb-3 error">
+            @error('email')
+              {{ $message }}
+            @enderror
+          </div>
+
+          <div class="input-group">
+            <input type="password" class="form-control" placeholder="Password" name="password"
+              value="{{ old('password') }}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
+          <div class="text-danger mb-3 error">
+            @error('password')
+              {{ $message }}
+            @enderror
+          </div>
+
           <p class="mb-1">
             <a href="/admin/login">Login as admin</a>
           </p>
@@ -72,6 +93,12 @@
   <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script>
+
+  <script>
+    $("#danger-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#danger-alert").slideUp(500);
+    });
+  </script>
 </body>
 
 </html>
