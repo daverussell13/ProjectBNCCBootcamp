@@ -107,7 +107,7 @@
       $(document).Toasts('create', {
         class: 'bg-success',
         title: 'Success',
-        body: '{{ Route::get('Success') }}',
+        body: 'New product has been successfully added',
         autohide: true,
         delay: 2000
       });
@@ -117,7 +117,7 @@
       $(document).Toasts('create', {
         class: 'bg-danger',
         title: 'Failed',
-        body: '{{ Route::get('Failed') }}',
+        body: 'Something went wrong',
         autohide: true,
         delay: 2000
       })

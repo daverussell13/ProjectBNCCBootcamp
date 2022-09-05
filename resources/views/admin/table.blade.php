@@ -49,9 +49,16 @@
                               data-product="{{ $product->id }}" onclick="fetchDataProduct(event);">
                               <i class="fa-regular fa-pen-to-square"></i>
                             </button>
-                            <button type="button" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" onclick="deleteProducts(event);"
+                              data-product="{{ $product->id }}">
                               <i class="fa-solid fa-trash"></i>
                             </button>
+                            <form action="{{ route('admin.delete') }}"
+                              class="delete-products-{{ $product->id }} d-none" method="POST">
+                              @csrf
+                              @method('DELETE')
+                              <input type="hidden" name="id" value="{{ $product->id }}">
+                            </form>
                           </td>
                         </tr>
                       @endforeach
@@ -81,12 +88,13 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form id="form-modal">
+        <form id="form-modal" action="{{ route('admin.update') }}" method="POST" enctype="multipart/form-data">
           <div class="modal-body">
             <div class="pr-3 pl-3">
-
+              @method('PUT')
               @csrf
-              <img src="" class="img-thumbnail mb-2" alt="pic" id="modal-thumbnail" height="125"
+              <input type="hidden" name="id" value="#" id="inputId">
+              <img src="#" class="img-thumbnail mb-2" alt="pic" id="modal-thumbnail" height="125"
                 width="125" style="max-height: 150px; max-width: 150px;">
               <div class="form-group">
                 <label for="inputName">Name</label>
@@ -176,7 +184,41 @@
 @endsection
 
 @section('script')
-  <script src="{{ asset('/') }}js/admin/fetchData.js"></script>
+  @if (Session::get('UpdateSuccess'))
+    <script>
+      $(document).Toasts('create', {
+        class: 'bg-success',
+        title: 'Success',
+        body: 'Products have been successfully updated',
+        autohide: true,
+        delay: 2000
+      });
+    </script>
+  @endif
+
+  @if (Session::get('Success'))
+    <script>
+      $(document).Toasts('create', {
+        class: 'bg-success',
+        title: 'Success',
+        body: 'Product deleted successfully',
+        autohide: true,
+        delay: 2000
+      });
+    </script>
+  @endif
+
+  @if (Session::get('Fail'))
+    <script>
+      $(document).Toasts('create', {
+        class: 'bg-success',
+        title: 'Success',
+        body: 'Something went wrong',
+        autohide: true,
+        delay: 2000
+      });
+    </script>
+  @endif
   <!-- DataTables  & Plugins -->
   <script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -190,13 +232,5 @@
   <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-  <script>
-    $('#example1').DataTable({
-      "paging": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  </script>
+  <script src="{{ asset('/') }}js/admin/table_page.js"></script>
 @endsection

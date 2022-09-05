@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,8 @@ Route::prefix("admin")->name("admin.")->group(function () {
     Route::get("/create", [AdminController::class, "create"])->name("create");
     Route::post("/create", [ProductController::class, "store"]);
     Route::post("/logout", [AdminController::class, "logout"])->name("logout");
+    Route::delete("/delete", [ProductController::class, "delete"])->name("delete");
+    Route::put("/update", [ProductController::class, "update"])->name("update");
   });
 });
 
