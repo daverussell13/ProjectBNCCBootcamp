@@ -4,7 +4,7 @@
   <form action="/admin/create" method="post" enctype="multipart/form-data">
     @csrf
     <div class="row pr-2 pl-2">
-      <div class="col-md-12">
+      <div class="col-md-8">
         <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Product</h3>
@@ -92,8 +92,8 @@
       </div>
     </div>
     <div class="row pr-2 pl-2">
-      <div class="col-12 d-flex justify-content-end">
-        <a href="#" class="btn btn-secondary mr-2">Reset</a>
+      <div class="col-12">
+        <a href="{{ route('admin.create') }}" class="btn btn-secondary mr-2">Reset</a>
         <input type="submit" value="Create new Product" class="btn btn-success">
       </div>
     </div>
@@ -107,7 +107,19 @@
       $(document).Toasts('create', {
         class: 'bg-success',
         title: 'Success',
-        body: 'New product has been successfully added'
+        body: '{{ Route::get('Success') }}',
+        autohide: true,
+        delay: 2000
+      });
+    </script>
+  @elseif (Session::get('Failed'))
+    <script>
+      $(document).Toasts('create', {
+        class: 'bg-danger',
+        title: 'Failed',
+        body: '{{ Route::get('Failed') }}',
+        autohide: true,
+        delay: 2000
       })
     </script>
   @endif

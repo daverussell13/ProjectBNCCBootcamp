@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 
 class AdminController extends Controller
 {
   public function table()
   {
     return view("admin.table", [
-      "user" => Auth::guard("admin")->user()
+      "user" => Auth::guard("admin")->user(),
+      "products" => Product::with("category")->get(),
+      "categories" => Category::with("products")->get()
     ]);
   }
 

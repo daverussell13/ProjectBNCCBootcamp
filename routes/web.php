@@ -47,3 +47,6 @@ Route::prefix("admin")->name("admin.")->group(function () {
     Route::post("/logout", [AdminController::class, "logout"])->name("logout");
   });
 });
+
+// Public api
+Route::post("/api/getproduct", [ProductController::class, "getProductData"]);
