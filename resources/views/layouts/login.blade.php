@@ -13,6 +13,11 @@
   <link rel="stylesheet" href="{{ asset('/') }}plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/') }}dist/css/adminlte.min.css">
+  <style>
+    .error {
+      font-size: 0.85em;
+    }
+  </style>
 </head>
 
 <body class="hold-transition login-page">
