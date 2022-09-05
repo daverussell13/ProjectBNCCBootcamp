@@ -62,10 +62,32 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
             data-accordion="false">
             <li class="nav-item">
-              @yield('menu')
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa-solid fa-folder-open"></i>
+                <p>
+                  Data
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('admin.home') }}" class="nav-link">
+                    <i class="{{ Request::is('admin/table') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                    <p>Table</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('admin.create') }}" class="nav-link">
+                    <i class="{{ Request::is('admin/create') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                    <p>Create</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link" onclick="sendLogoutRequest();">
-                <i class="nav-icon fa-solid fa-arrow-right-from-bracket ml-1"></i>
-                <p class="ml-1">
+                <i class="nav-icon fa-solid fa-arrow-right-from-bracket"></i>
+                <p>
                   Logout
                 </p>
               </a>
@@ -83,27 +105,25 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>{{ $section_title }}</h1>
+              <h1>{{ Request::is('admin/table') ? 'Table' : 'Create' }}</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Data</a></li>
-                <li class="breadcrumb-item active">{{ $section_title }}</li>
+                <li class="breadcrumb-item active">{{ Request::is('admin/table') ? 'Table' : 'Create' }}</li>
               </ol>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
+      @yield('flash-message')
 
-            </div>
-          </div>
-        </div>
+      <!-- Main content -->
+      <section class="content pb-5">
+
+        @yield('content')
+
       </section>
     </div>
 
@@ -112,6 +132,7 @@
       <!-- Control sidebar content goes here -->
     </aside>
   </div>
+
   <!-- Javascript -->
   <script>
     function sendLogoutRequest() {
@@ -122,10 +143,13 @@
   <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- overlayScrollbars -->
+  <!-- Scrollbar -->
   <script src="{{ asset('/') }}plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script>
+  <!-- User Script -->
+  @yield('script')
+  <!-- Page specific script -->
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
@@ -40,7 +41,9 @@ Route::prefix("admin")->name("admin.")->group(function () {
   });
 
   Route::middleware(["auth:admin", "prevent-back-history"])->group(function () {
-    Route::get("/home", [AdminController::class, "home"])->name("home");
+    Route::get("/table", [AdminController::class, "table"])->name("home");
+    Route::get("/create", [AdminController::class, "create"])->name("create");
+    Route::post("/create", [ProductController::class, "store"]);
     Route::post("/logout", [AdminController::class, "logout"])->name("logout");
   });
 });

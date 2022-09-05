@@ -5,14 +5,22 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class AdminController extends Controller
 {
-  public function home()
+  public function table()
   {
-    return view("admin.home", [
+    return view("admin.table", [
+      "user" => Auth::guard("admin")->user()
+    ]);
+  }
+
+  public function create()
+  {
+    return view("admin.create", [
       "user" => Auth::guard("admin")->user(),
-      "section_title" => "Table"
+      "categories" => Category::all()
     ]);
   }
 
