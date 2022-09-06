@@ -21,4 +21,9 @@ class Product extends Model
   {
     return $this->belongsTo(Category::class);
   }
+
+  public function fakturs()
+  {
+    return $this->belongsToMany(Faktur::class, "faktur_product", 'faktur_id', 'product_id');
+  }
 }

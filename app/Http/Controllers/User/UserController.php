@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -26,13 +27,33 @@ class UserController extends Controller
   public function home()
   {
     return view("user.home", [
-      "products" => Product::with("category")->get()
+      "products" => Product::with("category")->get(),
+      "user" => Auth::user()
     ]);
   }
 
   public function faktur()
   {
-    return view("user.faktur");
+    $user_id = Auth::user()->id;
+
+    $results = DB::table("temp_faktur_list")
+      ->where("user_id", $user_id)
+      ->get();
+
+    $products = [];
+    $total = 0;
+
+    foreach ($results as $result) {
+      $product = Product::with("category")->where("id", $result->product_id)->get()->first();
+      $products[] = $product;
+      $total += $product->price;
+    }
+
+    return view("user.faktur", [
+      "user" => Auth::user(),
+      "products" => $products,
+      "total" => $total
+    ]);
   }
 
   public function postRegister(Request $request)

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\FakturController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,3 +55,4 @@ Route::prefix("admin")->name("admin.")->group(function () {
 
 // Public api
 Route::post("/api/getproduct", [ProductController::class, "getProductData"]);
+Route::post("/api/temp-faktur-list", [FakturController::class, "storeFakturList"]);

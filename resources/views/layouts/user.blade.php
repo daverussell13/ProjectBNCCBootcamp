@@ -58,13 +58,7 @@
 
   </main>
 
-  <footer class="text-muted">
-    <div class="container">
-    </div>
-  </footer>
-
   <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
-  <script src="{{ asset('/') }}plugins/popper/popper.min.js"></script>
   <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="{{ asset('/') }}plugins/holder/js/holder.min.js"></script>
 
