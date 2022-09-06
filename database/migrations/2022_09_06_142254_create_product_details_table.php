@@ -13,10 +13,15 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('faktur_product', function (Blueprint $table) {
+    Schema::create('product_details', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger("product_id");
       $table->unsignedBigInteger("faktur_id");
+      $table->string("name");
+      $table->integer("quantity");
+      $table->string("category");
+      $table->string("subtotal");
+      $table->timestamps();
+      $table->foreign("faktur_id")->references("id")->on("fakturs")->onDelete("cascade");
     });
   }
 
@@ -27,6 +32,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('faktur_product');
+    Schema::dropIfExists('product_details');
   }
 };

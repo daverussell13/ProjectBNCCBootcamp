@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductDetail extends Model
 {
   use HasFactory;
 
   protected $fillable = [
+    "faktur_id",
     "name",
-    "price",
-    "category_id",
     "quantity",
-    "picture"
+    "category",
+    "subtotal",
   ];
 
-  public function category()
+  public function faktur()
   {
-    return $this->belongsTo(Category::class);
+    return $this->belongsTo(Faktur::class);
   }
 }

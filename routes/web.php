@@ -33,6 +33,7 @@ Route::prefix("user")->name("user.")->group(function () {
     Route::get("/home", [UserController::class, "home"])->name("home");
     Route::post("/logout", [UserController::class, "logout"])->name("logout");
     Route::get("/faktur", [UserController::class, "faktur"])->name("faktur");
+    Route::post("/faktur", [FakturController::class, "storeFaktur"]);
   });
 });
 

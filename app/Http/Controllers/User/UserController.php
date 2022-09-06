@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Helper\InvoiceHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -52,7 +53,8 @@ class UserController extends Controller
     return view("user.faktur", [
       "user" => Auth::user(),
       "products" => $products,
-      "total" => $total
+      "total" => $total,
+      "invoice" => InvoiceHelper::generateInvoice()
     ]);
   }
 

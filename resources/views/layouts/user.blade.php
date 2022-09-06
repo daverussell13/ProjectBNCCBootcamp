@@ -18,6 +18,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Custom styles for this template -->
   <link href="{{ asset('/') }}css/album.css" rel="stylesheet">
+  <!-- Sweet alert -->
+  <link rel="stylesheet" href="{{ asset('/') }}plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
   @yield('meta')
 
@@ -61,6 +63,8 @@
   <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
   <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="{{ asset('/') }}plugins/holder/js/holder.min.js"></script>
+  <!-- Sweet alert -->
+  <script src="{{ asset('/') }}plugins/sweetalert2/sweetalert2.min.js"></script>
 
   @yield('scripts')
 

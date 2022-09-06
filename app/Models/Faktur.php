@@ -9,13 +9,21 @@ class Faktur extends Model
 {
   use HasFactory;
 
+  protected $fillable = [
+    "user_id",
+    "invoice",
+    "receiver_address",
+    "receiver_postal_code",
+    "total",
+  ];
+
   public function user()
   {
-    return $this->belongsTo(User::class, "user_id");
+    return $this->belongsTo(User::class);
   }
 
-  public function products()
+  public function product_details()
   {
-    return $this->hasMany(Product::class, "");
+    return $this->hasMany(ProductDetail::class);
   }
 }

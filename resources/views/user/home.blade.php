@@ -1,13 +1,8 @@
 @extends('layouts.user')
 
-@section('meta')
-  <!-- Sweet alert -->
-  <link rel="stylesheet" href="{{ asset('/') }}plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-@endsection
-
 @section('content')
   @csrf
-  <div class="album py-5 bg-light">
+  <div class="album py-5">
     @if (!count($products))
       <section class="jumbotron text-center">
         <div class="container">
@@ -48,7 +43,5 @@
 @endsection
 
 @section('scripts')
-  <!-- Sweet alert -->
-  <script src="{{ asset('/') }}plugins/sweetalert2/sweetalert2.min.js"></script>
   <script src="{{ asset('/') }}js/user/send_data.js"></script>
 @endsection

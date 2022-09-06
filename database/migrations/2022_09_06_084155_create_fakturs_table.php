@@ -17,9 +17,9 @@ return new class extends Migration
     Schema::create('fakturs', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger("user_id");
-      $table->string("invoice");
-      $table->string("receiver_name");
+      $table->string("invoice")->unique();
       $table->string("receiver_address");
+      $table->string("receiver_postal_code");
       $table->integer("total");
       $table->timestamps();
       $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
