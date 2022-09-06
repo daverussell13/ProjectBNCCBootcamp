@@ -18,6 +18,16 @@ class FakturController extends Controller
       "product_id" => "required|exists:products,id"
     ]);
 
+    $returned = DB::table("temp_faktur_list")
+      ->where("user_id", $request->input("user_id"))
+      ->where("product_id", $request->input("product_id"))
+      ->get()->first();
+
+    if ($returned) return json_encode([
+      "status" => "error",
+      "message" => "Product already exist in faktur"
+    ]);
+
     $inserted = DB::table("temp_faktur_list")->insert([
       "user_id" => $validated["user_id"],
       "product_id" => $validated["product_id"]
@@ -40,7 +50,6 @@ class FakturController extends Controller
       "user_id" => "required|exists:users,id",
       "receiver_address" => "required",
       "receiver_postal_code" => "required|numeric",
-      "total" => "required|numeric",
       "products.*.product_id" => "required|exists:products,id",
       "products.*.new_qty" => "required|numeric"
     ]);
@@ -49,12 +58,13 @@ class FakturController extends Controller
 
     try {
       $validated = $request->only([
-        "invoice", "user_id", "receiver_address", "receiver_postal_code", "total"
+        "invoice", "user_id", "receiver_address", "receiver_postal_code"
       ]);
 
       $faktur = Faktur::create($validated);
       $request_products = $request->input("products");
 
+      $total = 0;
       foreach ($request_products as $request_product) {
         $product = Product::where("id", $request_product["product_id"])->get()->first();
         $new_qty = $request_product["new_qty"];
@@ -75,7 +85,13 @@ class FakturController extends Controller
         $product->save();
 
         if (!$product->wasChanged()) throw new \Exception("Something went wrong");
+        $total += $product->price * $new_qty;
       }
+
+      $faktur->total = $total;
+      $faktur->save();
+
+      if (!$faktur->wasChanged('total')) throw new \Exception("Something went wrong");
 
       $deleted = DB::table("temp_faktur_list")->where("user_id", $request->input("user_id"))->delete();
       if (!$deleted) throw new \Exception("Something went wrong");
@@ -86,5 +102,15 @@ class FakturController extends Controller
       return redirect()->back()->with("Error", $exception->getMessage());
     }
     return redirect()->back()->with("Success", "Success");
+  }
+
+  public function resetTempFakturListUser(Request $request)
+  {
+    $validated = $request->validate([
+      "user_id" => "required|exists:users,id"
+    ]);
+
+    DB::table("temp_faktur_list")->where("user_id", $validated["user_id"])->delete();
+    return redirect()->back();
   }
 }

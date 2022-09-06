@@ -25,16 +25,21 @@
                   </div>
                   <div class="d-flex justify-content-end align-items-center">
                     <div class="btn-group">
-                      @if ($product->quantity)
+                      @if (!$product->quantity)
+                        <button type="button" class="btn btn-secondary faktur-btn" data-product="{{ $product->id }}"
+                          data-user="{{ $user->id }}" disabled>
+                          Out of stock
+                        </button>
+                      @elseif (array_key_exists($product->id, $product_used_hashmap))
+                        <button type="button" class="btn btn-secondary faktur-btn" data-product="{{ $product->id }}"
+                          data-user="{{ $user->id }}" disabled>
+                          Already in faktur
+                        </button>
+                      @else
                         <button type="button" class="btn btn-primary faktur-btn" data-product="{{ $product->id }}"
                           data-user="{{ $user->id }}">
                           <i class="fa-solid fa-plus fa-xs"></i>
                           Faktur
-                        </button>
-                      @else
-                        <button type="button" class="btn btn-secondary faktur-btn" data-product="{{ $product->id }}"
-                          data-user="{{ $user->id }}" disabled>
-                          Out of stock
                         </button>
                       @endif
                     </div>

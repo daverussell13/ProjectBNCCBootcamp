@@ -27,9 +27,19 @@ class UserController extends Controller
 
   public function home()
   {
+    $user_id = Auth::user()->id;
+
+    $temp_faktur_list = DB::table("temp_faktur_list")->where("user_id", $user_id)->get()->toArray();
+    $product_hash_map = [];
+
+    foreach ($temp_faktur_list as $temp_faktur) {
+      $product_hash_map[$temp_faktur->product_id] = "1";
+    }
+
     return view("user.home", [
       "products" => Product::with("category")->get(),
-      "user" => Auth::user()
+      "user" => Auth::user(),
+      "product_used_hashmap" => $product_hash_map
     ]);
   }
 
@@ -42,19 +52,16 @@ class UserController extends Controller
       ->get();
 
     $products = [];
-    $total = 0;
 
     foreach ($results as $result) {
       $product = Product::with("category")->where("id", $result->product_id)->get()->first();
       $products[] = $product;
-      $total += $product->price;
     }
 
     return view("user.faktur", [
       "user" => Auth::user(),
       "products" => $products,
-      "total" => $total,
-      "invoice" => InvoiceHelper::generateInvoice()
+      "invoice" => InvoiceHelper::generateInvoice(),
     ]);
   }
 

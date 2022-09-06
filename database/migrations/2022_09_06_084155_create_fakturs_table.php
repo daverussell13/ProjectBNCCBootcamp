@@ -20,7 +20,7 @@ return new class extends Migration
       $table->string("invoice")->unique();
       $table->string("receiver_address");
       $table->string("receiver_postal_code");
-      $table->integer("total");
+      $table->integer("total")->nullable();
       $table->timestamps();
       $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
     });

@@ -34,6 +34,7 @@ Route::prefix("user")->name("user.")->group(function () {
     Route::post("/logout", [UserController::class, "logout"])->name("logout");
     Route::get("/faktur", [UserController::class, "faktur"])->name("faktur");
     Route::post("/faktur", [FakturController::class, "storeFaktur"]);
+    Route::delete("/faktur/reset", [FakturController::class, "resetTempFakturListUser"])->name("faktur.reset");
   });
 });
 

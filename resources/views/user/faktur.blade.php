@@ -1,20 +1,20 @@
 @extends('layouts.user')
 
 @section('content')
-  <form action="/user/faktur" method="POST" id="store-faktur-form">
-    @csrf
-    <div class="container my-4">
-      <div class="invoice p-3 mb-3">
-        <!-- title row -->
-        <div class="row mb-2">
-          <div class="col-12">
-            <h4>
-              <i class="fas fa-globe"></i> PT Makmur Jaya
-            </h4>
-          </div>
-          <!-- /.col -->
+  <div class="container my-4">
+    <div class="invoice p-3 mb-3">
+
+      <div class="row mb-2">
+        <div class="col-12">
+          <h4>
+            <i class="fas fa-globe"></i> PT Makmur Jaya
+          </h4>
         </div>
-        <!-- info row -->
+      </div>
+
+      <form action="/user/faktur" method="POST" id="store-faktur-form">
+        @csrf
+
         <div class="row invoice-info mb-4">
           <div class="col-sm-4 invoice-col">
             From
@@ -24,7 +24,7 @@
               Email: {{ $user->email }}
             </address>
           </div>
-          <!-- /.col -->
+
           <div class="col-sm-4 invoice-col">
             To
             <div class="mb-2">
@@ -43,9 +43,7 @@
           </div>
           <!-- /.col -->
         </div>
-        <!-- /.row -->
 
-        <!-- Table row -->
         <div class="row">
           <div class="col-12 table-responsive">
             <table class="table table-striped">
@@ -75,29 +73,34 @@
           </div>
           <!-- /.col -->
         </div>
-        <!-- /.row -->
 
-        <!-- /.row -->
+        <input type="hidden" value="{{ $user->id }}" name="user_id">
+        <input type="hidden" value="{{ $invoice }}" name="invoice">
+      </form>
 
-        <!-- this row will not appear when printing -->
-        <div class="row no-print">
-          <div class="col-12">
-            <button type="submit" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Simpan Faktur
-            </button>
-            <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;">
-              <i class="fas fa-trash"></i> Reset
-            </button>
-          </div>
+      <div class="row no-print">
+        <div class="col-12">
+          <button type="button" class="btn btn-success float-right" onclick="submitFakturForm(event);"><i
+              class="far fa-credit-card"></i> Simpan Faktur
+          </button>
+          <form action="{{ route('user.faktur.reset') }}" method="POST" class="d-none" id="reset-form">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" value="{{ $user->id }}" name="user_id">
+          </form>
+          <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;"
+            onclick="resetFormSubmit(event);">
+            Reset
+          </button>
         </div>
       </div>
+
     </div>
-    <input type="hidden" value="{{ $user->id }}" name="user_id">
-    <input type="hidden" value="{{ $total }}" name="total">
-    <input type="hidden" value="{{ $invoice }}" name="invoice">
-  </form>
+  </div>
 @endsection
 
 @section('scripts')
+  <script src="{{ asset('/') }}js/user/submit_handler.js"></script>
   @if (Session::get('Success'))
     <script>
       Swal.fire(
