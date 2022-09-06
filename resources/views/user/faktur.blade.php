@@ -62,7 +62,7 @@
                   <tr>
                     <input type="hidden" value="{{ $product->id }}" name="products[{{ $i }}][product_id]">
                     <td>
-                      <input type="number" style="width: 50px" value="{{ $product->quantity }}" min="1"
+                      <input type="number" style="width: 50px" value="1" min="1"
                         max="{{ $product->quantity }}" name="products[{{ $i }}][new_qty]">
                     </td>
                     <td>{{ $product->name }}</td>
@@ -84,6 +84,9 @@
           <div class="col-12">
             <button type="submit" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Simpan Faktur
             </button>
+            <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;">
+              <i class="fas fa-trash"></i> Reset
+            </button>
           </div>
         </div>
       </div>
@@ -95,27 +98,21 @@
 @endsection
 
 @section('scripts')
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-    });
-  </script>
   @if (Session::get('Success'))
     <script>
-      Toast.fire({
-        icon: "success",
-        title: "Faktur has been successfully added",
-      });
+      Swal.fire(
+        'Good job!',
+        'Faktur successfully saved!',
+        'success'
+      )
     </script>
   @elseif (Session::get('Error'))
     <script>
-      Toast.fire({
-        icon: "error",
-        title: "Error occured cant save faktur",
-      });
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
     </script>
   @endif
 @endsection
