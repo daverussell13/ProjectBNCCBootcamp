@@ -118,19 +118,15 @@
           <a href="{{ route('user.login') }}" class="text-center">I already have an account</a>
           <div class="row">
             <div class="col-8"></div>
-            <!-- /.col -->
             <div class="col-4">
               <button type="submit" class="btn btn-primary btn-block">Register</button>
             </div>
-            <!-- /.col -->
           </div>
         </form>
 
       </div>
-      <!-- /.form-box -->
-    </div><!-- /.card -->
+    </div>
   </div>
-  <!-- /.register-box -->
 
   <!-- jQuery -->
   <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
