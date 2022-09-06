@@ -67,7 +67,6 @@
                     </td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->category->name }}</td>
-                    {{-- <td>Rp. {{ number_format($product->price, 2, ',', '.') }}</td> --}}
                   </tr>
                   <?php $i++; ?>
                 @endforeach

@@ -56,7 +56,7 @@ class FakturController extends Controller
       $request_products = $request->input("products");
 
       foreach ($request_products as $request_product) {
-        $product = Product::find($request_product["product_id"])->first();
+        $product = Product::where("id", $request_product["product_id"])->get()->first();
         $new_qty = $request_product["new_qty"];
 
         if ($new_qty > $product->quantity) throw new \Exception("Bad request");
@@ -76,8 +76,10 @@ class FakturController extends Controller
 
         if (!$product->wasChanged()) throw new \Exception("Something went wrong");
       }
+
       $deleted = DB::table("temp_faktur_list")->where("user_id", $request->input("user_id"))->delete();
       if (!$deleted) throw new \Exception("Something went wrong");
+
       DB::commit();
     } catch (\Exception $exception) {
       DB::rollBack();
