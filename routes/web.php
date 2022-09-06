@@ -4,7 +4,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
-use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +17,7 @@ use App\Models\Product;
 */
 
 Route::get('/', function () {
-  return view('welcome');
+  return redirect()->route("user.home");
 });
 
 Route::prefix("user")->name("user.")->group(function () {
@@ -32,8 +31,10 @@ Route::prefix("user")->name("user.")->group(function () {
   Route::middleware(["auth:web", "prevent-back-history"])->group(function () {
     Route::get("/home", [UserController::class, "home"])->name("home");
     Route::post("/logout", [UserController::class, "logout"])->name("logout");
+    Route::get("/faktur", [UserController::class, "faktur"])->name("faktur");
   });
 });
+
 
 Route::prefix("admin")->name("admin.")->group(function () {
   Route::middleware(["guest:admin", "prevent-back-history"])->group(function () {

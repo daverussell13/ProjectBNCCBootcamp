@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,14 @@ class UserController extends Controller
 
   public function home()
   {
-    return view("user.home");
+    return view("user.home", [
+      "products" => Product::with("category")->get()
+    ]);
+  }
+
+  public function faktur()
+  {
+    return view("user.faktur");
   }
 
   public function postRegister(Request $request)

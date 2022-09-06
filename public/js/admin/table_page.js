@@ -5,15 +5,6 @@ input_file.addEventListener("change", (e) => {
   label.textContent = e.target.files.item(0).name;
 });
 
-// Create Data table
-$("#example1").DataTable({
-  paging: true,
-  ordering: false,
-  info: true,
-  autoWidth: false,
-  responsive: true,
-});
-
 function selectOptionIndex(select_el, val) {
   for (let i, j = 0; (i = select_el.options[j]); j++)
     if (i.value == val) return (select_el.selectedIndex = j);
@@ -23,6 +14,10 @@ function selectOptionIndex(select_el, val) {
 // Fetch data to populate update modal data
 async function fetchDataProduct(event) {
   const csrf_token = document.querySelector("input[name=_token]").value;
+  const modal_trigger = document.querySelector(".modal-trigger");
+
+  document.getElementById("form-modal").reset();
+  document.querySelector(".custom-file-label").textContent = "Choose File";
 
   const request_data = {
     id: event.currentTarget.dataset.product,
@@ -52,6 +47,7 @@ async function fetchDataProduct(event) {
   document.getElementById("inputName").value = result.name;
   document.getElementById("inputPrice").value = result.price;
   document.getElementById("inputQuantity").value = result.quantity;
+  modal_trigger.click();
 }
 
 function deleteProducts(event) {

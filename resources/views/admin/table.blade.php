@@ -45,10 +45,11 @@
                           <td>{{ $product->quantity }}</td>
                           <td>{{ $product->category->name }}</td>
                           <td>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg"
-                              data-product="{{ $product->id }}" onclick="fetchDataProduct(event);">
+                            <button type="button" class="btn btn-primary" data-product="{{ $product->id }}"
+                              onclick="fetchDataProduct(event);">
                               <i class="fa-regular fa-pen-to-square"></i>
                             </button>
+                            <button class="modal-trigger d-none" data-toggle="modal" data-target="#modal-lg"></button>
                             <button type="button" class="btn btn-danger" onclick="deleteProducts(event);"
                               data-product="{{ $product->id }}">
                               <i class="fa-solid fa-trash"></i>
@@ -79,7 +80,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modal-lg">
+  <div class="modal fade show" id="modal-lg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -232,5 +233,6 @@
   <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <script src="{{ asset('/') }}js/admin/jquery_script.js"></script>
   <script src="{{ asset('/') }}js/admin/table_page.js"></script>
 @endsection
